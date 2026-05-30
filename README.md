@@ -36,4 +36,4 @@ This is a learning project, so it’s very minimal and runs on a single connecti
 ## What I want to improve next
 
 - Support multiple clients using threads
-- 
+-  ...
