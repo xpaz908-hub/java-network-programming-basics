@@ -6,33 +6,30 @@ public class Client {
     public static void main(String[] args) {
         // Clear the terminal and initialize resources for the client
         Util.clearTerminal();
-        Socket socket = null;
-        InputStreamReader inputStreamReader = null;
-        OutputStreamWriter outputStreamWriter = null;
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
 
-        try (Scanner scan = new Scanner(System.in)) {
-            socket = new Socket("0.0.0.0", 80); // Connect to the server at any network interface on port 80 (sends a request)
-            inputStreamReader = new InputStreamReader(socket.getInputStream());
-            outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
-            bufferedReader = new BufferedReader(inputStreamReader);
-            bufferedWriter = new BufferedWriter(outputStreamWriter);
-
+        try (Scanner scan = new Scanner(System.in);
+             // Attempt to connect to the server at localhost on port 80
+            Socket socket = new Socket("localhost", 80);
+            // Set up input and output streams for communication with the client
+            BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+            BufferedWriter bufferedWriter = new BufferedWriter(
+                new OutputStreamWriter(socket.getOutputStream()))) {
+            
             System.out.println("Connected to server: " + socket.getInetAddress());
-            System.out.println(Util.bold("Ready to chat!"));
-            System.out.print("\n-> ");
+            System.out.println(Util.bold("Ready to chat!\n"));
 
             while (true) {
-                System.out.print("\n-> ");
-                
+                System.out.print("-> ");
                 bufferedWriter.write(scan.nextLine());
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
-
-                while(bufferedReader.readLine() != null) {
-                    System.out.println("Server: " + bufferedReader.readLine());
-                }
+                
+                // String msg = bufferedReader.readLine();
+                // if(msg != null)
+                //     System.out.println("\nServer: " + msg);
+                // else
+                //     break;
             }
         } catch (Exception e) {
             e.printStackTrace();

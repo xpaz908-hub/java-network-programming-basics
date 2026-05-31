@@ -4,42 +4,39 @@ import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) {
-        Util.clearTerminal();
         // Clear the terminal and indicate that the server is listening on port 80
-        System.out.println("Server is listening on port 80...");
+        Util.clearTerminal();
         // Initialize server socket and other resources
-        ServerSocket serverSocket = null;
-        Socket socket = null;
-        InputStreamReader inputStreamReader = null;
-        OutputStreamWriter outputStreamWriter = null;
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
+        System.out.println("Server is listening on port 80...");
 
-        try (Scanner scan = new Scanner(System.in)) {
-            serverSocket = new ServerSocket(80); // Create a server socket on port 80
-            socket = serverSocket.accept();
-            // Wait for a client to connect (request) and block until a connection is made.
+        try (Scanner scan = new Scanner(System.in);
+            // Create a server socket on port 80 (listens for incoming connections)
+            ServerSocket serverSocket = new ServerSocket(80);
+            // Wait for a client to connect and block until a connection is made.
             // When a connection is made, returns a new socket for communication with the client
-            System.out.println("Client connected: " + socket.getInetAddress());
-            inputStreamReader = new InputStreamReader(socket.getInputStream());
-            outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
-            bufferedReader = new BufferedReader(inputStreamReader);
-            bufferedWriter = new BufferedWriter(outputStreamWriter);
+            Socket socket = serverSocket.accept();
             // Set up input and output streams for communication with the client
-
-            System.out.println(Util.bold("Ready to chat!"));
+            BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+            BufferedWriter bufferedWriter = new BufferedWriter(
+                new OutputStreamWriter(socket.getOutputStream()))) {
+            
+            Util.clearTerminal();
+            System.out.println("Client connected: " + socket.getInetAddress());
+            System.out.println(Util.bold("Ready to chat!\n"));
 
             // Enter an infinite loop to communicate with the client
             while (true) {
-                System.out.print("\n-> ");
+                System.out.print("-> ");
+                String msg = bufferedReader.readLine();
+                if(msg != null)
+                    System.out.println("\nClient: " + msg);
+                else
+                    break;
 
-                bufferedWriter.write(scan.nextLine()); 
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-
-                while(bufferedReader.readLine() != null) {
-                    System.out.println("Client: " + bufferedReader.readLine());
-                }
+                // bufferedWriter.write(scan.nextLine()); 
+                // bufferedWriter.newLine();
+                // bufferedWriter.flush();
             }
         } catch (Exception BaseException) {
             BaseException.printStackTrace();
