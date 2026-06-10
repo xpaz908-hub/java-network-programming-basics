@@ -1,22 +1,15 @@
-# Java Networking & Socket Programming Practice
-
-This repository contains small Java projects focused on learning the fundamentals of networking and socket programming.
-
-The goal is to understand how client-server communication works using TCP sockets in Java.
+# Networking & Socket Programming Practice
+A minimal two-way, full-duplex chat system using TCP sockets where a client and server can send messages to each other through the terminal over a connection bound to an IP address and port.
 
 ## What I’m learning
 
 - How TCP client-server communication works
 - Using `ServerSocket` and `Socket` classes in Java
-- Reading and writing data streams between applications
+- Reading and writing data streams across applications
 - Foundational networking concepts
+- Multithreading
 
-## Projects
-
-### 1. Simple Chat (Client-Server)
-A very minimal two-way chat system with a single connection using sockets where a client and server can send messages to each other over any network interface through the terminal.
-
-#### How it works
+#### How it fundamentally works
 
 1. Creates a server using `ServerSocket` to listen on a port accepting connections
 2. Connects a client using `Socket` to the server when accepted
