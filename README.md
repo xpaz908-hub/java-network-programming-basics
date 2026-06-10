@@ -27,10 +27,4 @@ A very minimal two-way chat system with a single connection using sockets where 
 
 1. Start the server: `java Server.java`
 2. Run client in a seperate terminal window: `java Client.java`
-3. You can then type messages back and forth between the two. *(WIP)*
-
-
-#### What I want to improve next
-
-- Support multiple clients using threads
-- 
+3. You can then type messages back and forth between the two.
